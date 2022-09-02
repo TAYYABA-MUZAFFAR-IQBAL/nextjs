@@ -21,6 +21,7 @@ import api from "../services/api";
 export default function Home() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [id, setId] = useState(null);
   const [clients, setClients] = useState([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -38,6 +39,14 @@ export default function Home() {
     if (!email) {
       return toast({
         title: "Fill in the email field!",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+    if (!password) {
+      return toast({
+        title: "Fill in the password field!",
         status: "error",
         duration: 9000,
         isClosable: true,
@@ -95,6 +104,7 @@ export default function Home() {
     setId(client._id);
     setName(client.name);
     setEmail(client.email);
+    setPassword(client.password);
     setIsFormOpen(true);
   };
 
@@ -177,6 +187,15 @@ export default function Home() {
                   placeholder="Enter email"
                   onChange={(e) => setEmail(e.target.value)}
                   value={email}
+                />
+              </FormControl>
+              <FormControl mt={5}>
+                <FormLabel>Password</FormLabel>
+                <Input
+                  type="text"
+                  placeholder="Enter Password"
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={password}
                 />
               </FormControl>
 
