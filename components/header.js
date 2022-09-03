@@ -5,16 +5,14 @@ import {
   Link,
   Button
 } from "@chakra-ui/react";
-import { useLRAuth } from "loginradius-react"
 import { useRouter } from 'next/router';
 
 const Header = () => {
-  // const { isAuthenticated, user, logout } = useLRAuth()
   const router = useRouter();
-//   function logout() {
-//     localStorage.removeItem('user');
-//     Router.push('/login');
-// }
+    function logout() {
+      localStorage.removeItem('user');
+      router.push('/login');
+  }
   return (
     <Flex
       as="nav"
@@ -32,10 +30,7 @@ const Header = () => {
       </Flex>
       <Flex align="right" mr={5}>
         <Heading as="h6" size="lg" letterSpacing={"tighter"}>
-        {isAuthenticated && user && (
-          <Button onClick={() => '/'}>Log out</Button>
-        )}
-         {/* <Link href="">Logout</Link> */}
+          <Button onClick={()=> logout}>Logout</Button>
         </Heading>
       </Flex>
     </Flex>

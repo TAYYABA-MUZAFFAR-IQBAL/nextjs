@@ -72,6 +72,7 @@ export default function Home() {
       setClients(clients.concat(data.data));
       setName("");
       setEmail("");
+      setPassword("");
       setIsFormOpen(!isFormOpen);
       toast({
         title: "Registered successfully!",
@@ -194,7 +195,7 @@ export default function Home() {
                 <Input
                   type="text"
                   placeholder="Enter Password"
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                   value={password}
                 />
               </FormControl>

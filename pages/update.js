@@ -19,10 +19,9 @@ import {
 import Header from "../components/header";
 import api from "../services/api";
 
-const Signup = () => {
+const Update = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [id, setId] = useState(null);
   const [clients, setClients] = useState([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -45,14 +44,6 @@ const Signup = () => {
         isClosable: true,
       });
     }
-    if (!password) {
-      return toast({
-        title: "Fill in the password field!",
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
-    }
     if (clients.some((client) => client.email === email && client._id !== id)) {
       return toast({
         title: "E-mail already registered!",
@@ -69,14 +60,13 @@ const Signup = () => {
     if (isValidFormData()) return;
     try {
       setIsLoading(true);
-      const { data } = await api.post("/clients", { name, email,password });
+      const { data } = await api.post("/clients", { name, email });
       setClients(clients.concat(data.data));
       setName("");
       setEmail("");
-      setPassword("");
       setIsFormOpen(!isFormOpen);
       toast({
-        title: "Registered successfully!",
+        title: "Updated successfully!",
         status: "success",
         duration: 9000,
         isClosable: true,
@@ -104,7 +94,7 @@ const Signup = () => {
               <Flex justifyContent="flex-end">
                 <Flex align="center" mr={5}>
                   <Heading as="h1" size="lg" letterSpacing={"tighter"}>
-                    Register Client
+                    Update Client
                   </Heading>
                 </Flex>
               </Flex>
@@ -140,15 +130,6 @@ const Signup = () => {
                     value={email}
                   />
                 </FormControl>
-                <FormControl mt={5}>
-                  <FormLabel>Password</FormLabel>
-                  <Input
-                    type="text"
-                    placeholder="Enter Password"
-                    onChange={(e) => setPassword(e.target.value)}
-                    value={password}
-                  />
-                </FormControl>
 
                 <Button
                   colorScheme="green"
@@ -167,4 +148,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Update;
