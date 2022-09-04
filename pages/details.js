@@ -127,7 +127,7 @@ const Details = () => {
                         fontSize="small"
                         colorScheme="yellow"
                         mr="2"
-                        onClick={() => handlShowUpdateClient(client)}
+                        onClick={() =>  (client)}
                       >
                         Edit
                       </Button>
