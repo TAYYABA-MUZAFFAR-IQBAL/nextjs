@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 const Header = () => {
   const router = useRouter();
     function logout() {
-      localStorage.removeItem('user');
+      localStorage.removeItem('token');
       router.push('/login');
   }
   return (
@@ -30,7 +30,7 @@ const Header = () => {
       </Flex>
       <Flex align="right" mr={5}>
         <Heading as="h6" size="lg" letterSpacing={"tighter"}>
-          <Button onClick={()=> logout}>Logout</Button>
+          <Button onClick={logout}>Logout</Button>
         </Heading>
       </Flex>
     </Flex>

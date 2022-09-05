@@ -8,8 +8,9 @@ dbConnect();
 export default async function handler(req, res) {
       const { email, password } = req.body;
       if(!email || !password){
-        return res.status(422).json({error:"please fill all the fields"})
+       return res.status(422).json({error:"please fill all the fields"})
       }
+     
       
       const user = await Client.findOne({email})
       const doMatch =  (password === user.password)

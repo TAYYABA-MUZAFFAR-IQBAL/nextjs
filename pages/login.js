@@ -20,55 +20,59 @@ import { FaUserAlt, FaLock } from "react-icons/fa";
 import api from "../services/api";
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 const Login = () => {
   const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const isValidFormData = () => {
-    if (!email) {
-      return toast({
-        title: "Fill in the email field!!",
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
-    }
-    if (!password) {
-      return toast({
-        title: "Fill in the password field!",
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
-    }
-  };
+  // const isValidFormData = () => {
+  //   if (!email) {
+  //     return toast({
+  //       title: "Fill in the email field!!",
+  //       status: "error",
+  //       duration: 9000,
+  //       isClosable: true,
+  //     });
+  //   }
+  //   if (!password) {
+  //     return toast({
+  //       title: "Fill in the password field!",
+  //       status: "error",
+  //       duration: 9000,
+  //       isClosable: true,
+  //     });
+  //   }
+  // };
 
   const handleShowClick = () => setShowPassword(!showPassword);
 
   const handleSubmitLoginClient = async (e) => {
     e.preventDefault();
-    if (isValidFormData()) return;
-
-    const data = await api.post("/clients/auth", { email, password });
-    const res2 = await data.json()
-    if (res2.error) {
-      toast({ html: res2.error, classes: "red", title: "Login failed" })
-    } else {
-      console.log(res2)
-      localStorage.setItem('token', JSON.stringify(res2.token));
-      router.push('/')
+    // if (isValidFormData()) return;
+    try {
+      const data = await api.post("/clients/auth", { email, password });
+      console.log(data.data.token);
+      localStorage.setItem("token", JSON.stringify(data.data.token));
+      router.push("/");
+      // const res2 = await data.json();
+      // if (res2.error) {
+      //   // toast({ html: res2.error, classes: "red", title: "Login failed" })
+      // } else {
+      //   console.log(res2);
+       
+       
+      // }
+    } catch {
+      console.log("error in login");
     }
-    toast({
-      title: "Login successfully!",
-      status: "success",
-      duration: 9000,
-      isClosable: true,
-    });
-
-
+    // toast({
+    //   title: "Login successfully!",
+    //   status: "success",
+    //   duration: 9000,
+    //   isClosable: true,
+    // });
   };
 
   return (
@@ -115,21 +119,20 @@ const Login = () => {
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
-                    color="gray.300"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    autoComplete="on"
                     children={<CFaLock color="gray.300" />}
                   />
                   <Input
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Password"
+                     type="string"
+                    //  color="gray.300"
+                     value={password}
+                     onChange={(e) => setPassword(e.target.value)}
+                     autoComplete="on"
                   />
-                  <InputRightElement width="4.5rem">
+                  {/* <InputRightElement width="4.5rem">
                     <Button h="1.75rem" size="sm" onClick={handleShowClick}>
                       {showPassword ? "Hide" : "Show"}
                     </Button>
-                  </InputRightElement>
+                  </InputRightElement> */}
                 </InputGroup>
                 {/* <FormHelperText textAlign="right">
                   <Link>forgot password?</Link>
@@ -141,7 +144,7 @@ const Login = () => {
                 variant="solid"
                 colorScheme="teal"
                 width="full"
-                onClick={() => handleSubmitLoginClient(e)}
+                onClick={handleSubmitLoginClient}
               >
                 {/* <Link href="/">  Login</Link> */}
                 Login
